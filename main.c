@@ -39,6 +39,29 @@ int getNextID(const char *filename)
     return nextid + 1;
 }
 
+void listExpense()
+{
+    FILE* f = fopen("data.txt", "r");
+
+    if (f == NULL)
+    {
+        printf("Could not read file. Exiting\n");
+        exit(0);
+    }
+
+    int id;
+    char desc[50];
+    float amount;
+
+    printf("Current expenses are: \n");
+    while(fscanf(f, "%d %s %f", &id, desc, &amount) == 3)
+    {
+        printf("%d %s %.2f\n", id, desc, amount);
+    }
+
+    fclose(f);
+}
+
 void addExpense(const struct expense* expData)
 {
     FILE* f = fopen("data.txt", "a+");
@@ -48,6 +71,7 @@ void addExpense(const struct expense* expData)
 
 int main(int argc, char* argv[])
 {
+   // TODO: change these from chars to string comparison 
    switch (*argv[1])
    {
         case 'a':
@@ -61,6 +85,8 @@ int main(int argc, char* argv[])
                 exp.amount = atoi(argv[3]);
                 addExpense(&exp);
             }
+        case 'l':
+            listExpense();
         default: 
             return 1;
    }
