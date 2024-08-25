@@ -8,6 +8,7 @@ struct expense {
     float amount;
 };
 
+// TODO: transfer some functions to separate file 
 int getLineCount(const char *filename)
 {
     FILE* f = fopen(filename, "r");
