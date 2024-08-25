@@ -69,12 +69,13 @@ void addExpense(const struct expense* expData)
     fclose(f);
 }
 
-int main(int argc, char* argv[])
+int main(int argc, char* argv[]) 
 {
-   // TODO: change these from chars to string comparison 
-   switch (*argv[1])
-   {
-        case 'a':
+
+    // TODO: change these from chars to string comparison 
+    switch (*argv[1])
+    {
+         case 'a':
             if (argc != 4)
                 printf("Not enough arguments, should be: add DESCRIPTION AMOUNT\n");
             else
@@ -88,7 +89,7 @@ int main(int argc, char* argv[])
         case 'l':
             listExpense();
         default: 
-            return 1;
+            printf("Argument not supported.\n");
    }
 
    return 1;
