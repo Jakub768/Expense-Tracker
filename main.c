@@ -11,7 +11,7 @@ struct expense {
 // TODO: transfer some functions to separate file 
 int getLineCount(const char *filename)
 {
-    FILE* f = fopen(filename, "r");
+    FILE* f = readFile(filename);
 
     char buffer[256];
     int count = 0;
