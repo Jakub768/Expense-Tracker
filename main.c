@@ -15,7 +15,7 @@ int getLineCount(const char *filename)
 
     char buffer[256];
     int count = 0;
-
+    //TODO I think this could be faulty, investigate this later.
     while (fgets(buffer, sizeof(buffer), f) != NULL)
     {
         count++;
@@ -39,6 +39,31 @@ int getNextID(const char *filename)
     return nextid + 1;
 }
 
+void sumExpenses()
+{
+    FILE* f = fopen("data.txt", "r");
+
+    if (f == NULL)
+    {
+        printf("Could not read file. Exiting\n");
+        exit(0);
+    }
+
+    float sum = 0.0;
+    float x;
+
+    // asterisk omits id and description
+    // TODO round the number to 2 decimal points.
+    while(fscanf(f, "%*d %*s %f", &x) == 1)
+    {
+        sum += x;
+    }
+
+    printf("Total sum of expenses is: \n");
+    printf("%f\n", sum);
+    
+}
+
 void listExpense()
 {
     FILE* f = fopen("data.txt", "r");
@@ -56,7 +81,7 @@ void listExpense()
     printf("Current expenses are: \n");
     while(fscanf(f, "%d %s %f", &id, desc, &amount) == 3)
     {
-        printf("%d %s %.2f\n", id, desc, amount);
+        printf("ID: %d Description: %s amount: %.2f\n", id, desc, amount);
     }
 
     fclose(f);
@@ -86,8 +111,13 @@ int main(int argc, char* argv[])
                 exp.amount = atoi(argv[3]);
                 addExpense(&exp);
             }
+            break;
         case 'l':
             listExpense();
+            break;
+        case 's':
+            sumExpenses();
+            break;
         default: 
             printf("Argument not supported.\n");
    }
