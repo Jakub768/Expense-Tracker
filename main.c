@@ -26,28 +26,38 @@ int getLineCount(const char *filename)
     return count;
 }
 
-int getNextID(const char *filename)
+FILE* readFile(const char *filename)
 {
     FILE* f = fopen(filename, "r");
+
     if (f == NULL)
     {
-        return 1;
+        printf("Could not read file. Exiting\n");
+        fclose(f);
+        exit(0);
     }
-    fclose(f);
 
-    int nextid = getLineCount(filename);
-    return nextid + 1;
+    return f;
 }
 
-void sumExpenses()
+int getNextID()
 {
     FILE* f = fopen("data.txt", "r");
 
     if (f == NULL)
     {
-        printf("Could not read file. Exiting\n");
-        exit(0);
+        return 1;
     }
+
+    fclose(f);
+
+    int nextid = getLineCount("data.txt");
+    return nextid + 1;
+}
+
+void sumExpenses()
+{
+    FILE* f = readFile("data.txt");
 
     float sum = 0.0;
     float x;
@@ -66,13 +76,7 @@ void sumExpenses()
 
 void listExpense()
 {
-    FILE* f = fopen("data.txt", "r");
-
-    if (f == NULL)
-    {
-        printf("Could not read file. Exiting\n");
-        exit(0);
-    }
+    FILE* f = readFile("data.txt");
 
     int id;
     char desc[50];
@@ -106,7 +110,7 @@ int main(int argc, char* argv[])
             else
             {
                 struct expense exp;
-                exp.id = getNextID("data.txt");
+                exp.id = getNextID();
                 strcpy(exp.desc, argv[2]);
                 exp.amount = atoi(argv[3]);
                 addExpense(&exp);
