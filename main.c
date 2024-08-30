@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "util.c"
 
 struct expense {
     int id;
@@ -8,51 +9,11 @@ struct expense {
     float amount;
 };
 
-// TODO: transfer some functions to separate file 
-int getLineCount(const char *filename)
+
+void deleteExpense(int id)
 {
-    FILE* f = readFile(filename);
+   
 
-    char buffer[256];
-    int count = 0;
-    //TODO I think this could be faulty, investigate this later.
-    while (fgets(buffer, sizeof(buffer), f) != NULL)
-    {
-        count++;
-    }
-
-    fclose(f);
-
-    return count;
-}
-
-FILE* readFile(const char *filename)
-{
-    FILE* f = fopen(filename, "r");
-
-    if (f == NULL)
-    {
-        printf("Could not read file. Exiting\n");
-        fclose(f);
-        exit(0);
-    }
-
-    return f;
-}
-
-int getNextID()
-{
-    FILE* f = fopen("data.txt", "r");
-
-    if (f == NULL)
-    {
-        return 1;
-    }
-
-    fclose(f);
-
-    int nextid = getLineCount("data.txt");
-    return nextid + 1;
 }
 
 void sumExpenses()
@@ -121,6 +82,9 @@ int main(int argc, char* argv[])
             break;
         case 's':
             sumExpenses();
+            break;
+        case 'd': 
+            deleteExpense(*argv[2]);
             break;
         default: 
             printf("Argument not supported.\n");
