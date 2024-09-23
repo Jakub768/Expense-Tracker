@@ -16,6 +16,11 @@ void deleteExpense(int id)
 
 }
 
+void updateExpense()
+{
+    
+}
+
 void sumExpenses()
 {
     FILE* f = readFile("data.txt");
@@ -52,10 +57,10 @@ void listExpense()
     fclose(f);
 }
 
-void addExpense(const struct expense* expData)
+void addExpense(int* id, char desc[50], double* amount)
 {
     FILE* f = fopen("data.txt", "a+");
-    fprintf(f, "%d %s %.2f\n", expData->id, expData->desc, expData->amount);
+    fprintf(f, "%d %s %.2f\n", *id, desc, *amount);
     fclose(f);
 }
 
@@ -70,11 +75,11 @@ int main(int argc, char* argv[])
                 printf("Not enough arguments, should be: add DESCRIPTION AMOUNT\n");
             else
             {
-                struct expense exp;
-                exp.id = getNextID();
-                strcpy(exp.desc, argv[2]);
-                exp.amount = atoi(argv[3]);
-                addExpense(&exp);
+                char desc[50];
+                int id = getNextID();
+                strcpy(desc, argv[2]);
+                double amount = atoi(argv[3]);
+                addExpense(&id, desc, &amount);
             }
             break;
         case 'l':
